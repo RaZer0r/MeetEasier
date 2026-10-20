@@ -1,0 +1,98 @@
+/* =========================================================
+   Samværket mødeskærm – Ikon som vandmærke (valgt design)
+   Farvet venstreside med Samværkets ikon i stor størrelse som baggrundsgrafik. Mørk højreside med afrundede kort.
+   Indlæses EFTER MeetEasiers egne CSS-filer.
+   ========================================================= */
+
+/* ---------- Skrift: Nexa (samme som samvaerket.dk) ---------- */
+@font-face { font-family: "Nexa"; src: url("fonts/Nexa-Light.otf") format("opentype"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Nexa"; src: url("fonts/Nexa-Regular.otf") format("opentype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Nexa"; src: url("fonts/Nexa-Black.otf") format("opentype"); font-weight: 900; font-display: swap; }
+
+/* ---------- Farver og billeder ---------- */
+:root {
+  --kib-groen: #58a670;   /* KIB primær grøn */
+  --kib-roed: #e96e84;    /* KIB rosa/rød */
+  --hvid: #f7faf7;        /* KIB hvid */
+  --sort: #202223;        /* KIB sort */
+  --sand: #c49b5e;        /* KIB sand */
+  --samv-orange: #e29045; /* Samværkets orange streger */
+
+  /* Billeder fra statisk host – skift URL'erne her, hvis de flyttes */
+  --logo-hvid: url("https://www.samvaerket.dk/wp-content/uploads/2022/02/samvaerket-horizontal-white-rgb.png");
+  --logo-sort: url("https://www.samvaerket.dk/wp-content/uploads/2022/02/samvaerket-horizontal-black-rgb.png");
+  --streger: url("https://www.samvaerket.dk/wp-content/uploads/2026/01/lodrette-streger.png");
+  --logo-ratio: 6250 / 1332;  /* hele logoet */
+  --ikon-ratio: 957 / 1332;   /* kun ikonet (venstre del af logoet) */
+}
+
+/* ---------- Fælles opsætning ---------- */
+body { background: var(--sort); }
+#single-room__wrap, #single-room__wrap * { font-family: "Nexa", sans-serif; box-sizing: border-box; }
+#single-room__wrap .full-height { display: flex; max-width: none; margin: 0; overflow: hidden; }
+#single-room__wrap .full-height::before, #single-room__wrap .full-height::after { display: none; }
+#single-room__wrap .full-height .columns { float: none; height: 100vh; position: relative; overflow: hidden; }
+#single-room__wrap .full-height .left-col { flex: 0 0 66.6667%; max-width: none; display: flex; flex-direction: column; }
+#single-room__wrap .full-height .right-col { flex: 1 1 auto; max-width: none; display: flex; flex-direction: column; }
+#single-room__wrap .full-height .left-col > * { position: relative; z-index: 1; }
+#single-room__wrap .full-height .right-col > * { position: relative; z-index: 1; }
+#single-room__wrap table, #single-room__wrap tbody, #single-room__wrap tr, #single-room__wrap td { background: transparent !important; border: 0; margin: 0; }
+#single-room__wrap .full-height .right-col table { width: 100%; border-collapse: collapse; }
+#single-room__wrap .full-height .left-col.busy { --status: var(--kib-roed); }
+#single-room__wrap .full-height .left-col.open { --status: var(--kib-groen); }
+
+/* Optaget: mødets navn står i stedet for BUSY */
+#single-room__wrap .full-height .left-col.busy #single-room__room-status { display: none; }
+/* Sikkerhedsnet: er lokalet optaget uden et mødenavn, vises BUSY alligevel */
+#single-room__wrap .full-height .left-col.busy:not(:has(#single-room__meeting-subject)) #single-room__room-status { display: block; }
+#single-room__wrap .full-height .left-col.busy #single-room__meeting-subject {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+  overflow: hidden; overflow-wrap: break-word;
+}
+
+/* Ledig: FREE i stedet for OPEN */
+#single-room__wrap .full-height .left-col.open #single-room__room-status { font-size: 0; padding: 0; }
+#single-room__wrap .full-height .left-col.open #single-room__room-status::before { content: "Free"; display: block; }
+#single-room__wrap .full-height .left-col #single-room__next-up { display: block; }
+#single-room__wrap .full-height .left-col #single-room__next-up:empty { display: none; }
+
+/* ---------- Ikon som vandmærke (valgt design) ---------- */
+#single-room__wrap .full-height .left-col { padding: 4vw 4.5vw; color: #fff; }
+#single-room__wrap .full-height .left-col.busy { background: var(--kib-roed); }
+#single-room__wrap .full-height .left-col.open { background: var(--kib-groen); }
+#single-room__wrap .full-height .left-col::before {
+  content: ""; display: block; height: 2.6vw; aspect-ratio: var(--logo-ratio);
+  background: var(--logo-hvid) left center / contain no-repeat; margin-bottom: auto;
+}
+#single-room__wrap .full-height .left-col::after {
+  content: ""; position: absolute; z-index: 0; height: 125vh; aspect-ratio: var(--ikon-ratio);
+  right: -10vw; top: -12vh; background: var(--logo-hvid) left center / auto 100% no-repeat; opacity: .13;
+}
+/* Rummets navn øverst til højre, på linje med og i samme højde som logoet */
+#single-room__wrap .full-height .left-col #single-room__room-name {
+  position: absolute; top: 4vw; right: 4.5vw; max-width: 36vw; height: 2.6vw;
+  display: flex; align-items: center; justify-content: flex-end;
+  font-size: 2.6vw; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; line-height: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#single-room__wrap .full-height .left-col.open #single-room__room-status { line-height: .85; margin-bottom: 2.4vw; }
+#single-room__wrap .full-height .left-col.open #single-room__room-status::before { font-size: 15vw; font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; }
+#single-room__wrap .full-height .left-col #single-room__meeting-title { font-size: inherit; font-weight: 400; max-width: 52vw; }
+#single-room__wrap .full-height .left-col.busy #single-room__meeting-subject { font-size: 5.8vw; font-weight: 900; line-height: 1.04; margin-bottom: 1.6vw; }
+#single-room__wrap .full-height .left-col.open #single-room__next-up { font-size: 1.1vw; font-weight: 900; text-transform: uppercase; letter-spacing: .18em; opacity: .85; margin-bottom: .5vw; }
+#single-room__wrap .full-height .left-col.open #single-room__meeting-subject { font-size: 3vw; font-weight: 400; }
+#single-room__wrap .full-height .left-col #single-room__meeting-time { font-size: 2vw; font-weight: 300; margin-top: .4vw; }
+/* Booker skjules – det er ofte ikke den, der bruger lokalet */
+#single-room__wrap .full-height .left-col #single-room__meeting-organizer { display: none; }
+
+#single-room__wrap .full-height .right-col { background: var(--sort); color: var(--hvid); padding: 4vw 2.6vw; }
+#single-room__wrap .full-height .right-col #single-room__clock-wrap { padding-bottom: 2.6vw; }
+#single-room__wrap .full-height .right-col #single-room__clock-wrap #single-room__clock { text-align: left; }
+#single-room__wrap .full-height .right-col #single-room__clock-wrap #single-room__clock #single-room__time { font-size: 6vw; font-weight: 900; line-height: 1; letter-spacing: -.02em; }
+#single-room__wrap .full-height .right-col #single-room__clock-wrap #single-room__clock #single-room__date { font-size: 1.5vw; font-weight: 300; color: var(--sand); margin-top: .6vw; }
+#single-room__wrap .full-height .right-col #upcoming-title { font-size: 1.05vw; font-weight: 900; letter-spacing: .2em; text-transform: uppercase; color: rgba(247, 250, 247, .55); margin-bottom: 1vw; }
+#single-room__wrap .full-height .right-col table, #single-room__wrap .full-height .right-col table tbody { display: block; }
+#single-room__wrap .full-height .right-col table tr { display: block; border-bottom: 0; background: rgba(247, 250, 247, .07) !important; border-radius: 1.2vw; padding: 1vw 1.3vw; margin-bottom: .7vw; }
+#single-room__wrap .full-height .right-col table tr td { display: block; padding: 0; }
+#single-room__wrap .full-height .right-col table tr td.up__meeting-title { font-size: 1.2vw; font-weight: 400; }
+#single-room__wrap .full-height .right-col table tr td.up__meeting-time { width: auto; font-size: .95vw; font-weight: 300; color: var(--sand); padding-top: .35vw; }
