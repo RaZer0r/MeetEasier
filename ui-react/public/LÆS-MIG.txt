@@ -1,0 +1,38 @@
+Nyt design til mødeskærmene (MeetEasier)
+==========================================
+
+Designet er ren CSS, der lægges oven på MeetEasiers eksisterende styling.
+Der skal ikke ændres i React-koden. Der skal kun tilføjes én linje i index.html.
+
+Indhold
+-------
+samvaerket/samvaerket.css   – designet
+samvaerket/fonts/           – skrifttypen Nexa (Light, Regular, Black)
+eksempel-*.png              – sådan skal det se ud
+
+Sådan sættes det på
+-------------------
+1. Kopiér mappen "samvaerket" ind i MeetEasiers public-mappe,
+   så filen kan hentes på http://<server>:8080/samvaerket/samvaerket.css
+   (I MeetEasier-repoet er det ui-react/public/. Kør derefter build igen.
+   Lægges den direkte i build-mappen, forsvinder den ved næste build.)
+
+2. Tilføj denne linje i index.html (ui-react/public/index.html),
+   EFTER de andre <link rel="stylesheet">-linjer:
+
+   <link rel="stylesheet" href="/samvaerket/samvaerket.css">
+
+3. Genindlæs skærmene og tjek, at Nexa-skriften og Samværket-logoet vises.
+
+Godt at vide
+------------
+- Skrifttyperne SKAL ligge på samme server som skærmene. samvaerket.dk tillader
+  ikke, at skrifttyperne hentes derfra af andre sider (ingen CORS-header).
+- Logo og grafik hentes fra samvaerket.dk. Skærmene skal altså have internet.
+  Vil I hellere hoste billederne selv, så skift de tre URL'er øverst i CSS-filen
+  (--logo-hvid, --logo-sort, --streger).
+- Teksten "Open" vises som "Free", og "Busy" erstattes af mødets navn.
+  Bookeren (organizer) skjules. Det hele styres fra CSS-filen.
+- Lange mødenavne vises på højst 3 linjer og afsluttes med "…".
+- Designet er lavet til liggende skærme og skalerer med skærmbredden.
+- Fjern linjen i index.html for at gå tilbage til det gamle design.
